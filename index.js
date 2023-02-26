@@ -8,6 +8,7 @@ import UserRoute from "./routes/UserRoute.js";
 import EdataRoute from "./routes/EdataRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
 import WeatherRoute from "./routes/WeatherRoute.js";
+import { serverHost, serverHost2 } from "./server/server.js";
 
 dotenv.config();
 
@@ -34,7 +35,7 @@ app.use(session({
     }
 }))
 
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+app.use(cors({ credentials: true, origin: [serverHost, serverHost2] }));
 app.use(express.json());
 app.use(UserRoute);
 app.use(EdataRoute);
