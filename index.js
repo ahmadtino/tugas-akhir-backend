@@ -8,7 +8,6 @@ import UserRoute from "./routes/UserRoute.js";
 import EdataRoute from "./routes/EdataRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
 import WeatherRoute from "./routes/WeatherRoute.js";
-import { serverHost, serverHost2 } from "./server/server.js";
 
 dotenv.config();
 
@@ -35,7 +34,7 @@ app.use(session({
     }
 }))
 
-app.use(cors({ credentials: true, origin: [serverHost, serverHost2] }));
+app.use(cors({ credentials: true,  origin: [process.env.ORIGIN_1, process.env.ORIGIN_2]}));
 app.use(express.json());
 app.use(UserRoute);
 app.use(EdataRoute);
@@ -44,6 +43,6 @@ app.use(WeatherRoute);
 
 // store.sync();
 
-app.listen(process.env.APP_PORT, () => {
+app.listen(process.env.PORT, () => {
     console.log('Server up and running...');
 });
