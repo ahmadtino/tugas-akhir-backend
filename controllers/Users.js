@@ -52,11 +52,13 @@ export const updateUser = async(req, res) => {
         }
     });
     if (!user) return res.status(404).json({msg: "User tidak ditemukan"});
-    const {name, username, password, confPassword, role, region, lat, long} = req.body;
+    const {name, username, prevPassword, password, confPassword, role, region, lat, long} = req.body;
     let hashPassword;
     if (password === "" || password === null) {
         hashPassword = user.password;
     } else {
+        const match = await argon2.verify(user.password, prevPassword);
+        if (!match) return res.status(400).json({msg: "Password saat ini salah"});
         hashPassword = await argon2.hash(password);
         if (password !== confPassword) return res.status(400).json({
             msg: "Password dan Confirm Password tidak cocok"
